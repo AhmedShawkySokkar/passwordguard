@@ -1,0 +1,7 @@
+build/
+Testing/
+*.o
+*.a
+*.so
+*.json
+.DS_Store

@@ -1,0 +1,12 @@
+PROJECT_NAME           = "@PROJECT_NAME@"
+PROJECT_NUMBER         = "@PROJECT_VERSION@"
+PROJECT_BRIEF          = "Production Password Policy Auditor"
+OUTPUT_DIRECTORY       = "@PROJECT_BINARY_DIR@/docs"
+INPUT                  = "@PROJECT_SOURCE_DIR@/include" "@PROJECT_SOURCE_DIR@/README.md"
+USE_MDFILE_AS_MAINPAGE = "@PROJECT_SOURCE_DIR@/README.md"
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = YES
