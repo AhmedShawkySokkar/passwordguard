@@ -1,0 +1,26 @@
+name: PasswordGuard CI
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Quality & Documentation Tools
+        run: sudo apt-get update && sudo apt-get install -y cmake g++ cppcheck valgrind doxygen
+
+      - name: Static Code Analysis (cppcheck)
+        run: cppcheck --enable=warning,performance,portability --error-exitcode=1 src/ include/
+
+      - name: Configure & Build (Out-of-Source with Tests and Doxygen)
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_TESTS=ON -DBUILD_DOC=ON
+          cmake --build build -j2
+
+      - name: Run Automated Unit Tests (CTest)
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Dynamic Memory Leak Check (Valgrind)
+        run: valgrind --leak-check=full --error-exitcode=1 ./build/passwordguard
