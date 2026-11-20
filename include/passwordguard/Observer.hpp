@@ -29,13 +29,13 @@ public:
 
 /**
  * @class ConsoleAuditObserver
- * @brief Concrete Observer that prints check outcomes and tallies pass/fail counts.
+ * @brief Concrete Observer that prints masked check outcomes and tallies pass/fail counts.
  */
 class ConsoleAuditObserver : public IValidationObserver {
 public:
     /**
      * @brief Constructs a console observer.
-     * @param verbose If true, prints each check outcome to standard output.
+     * @param verbose If true, prints each masked check outcome to standard output.
      */
     explicit ConsoleAuditObserver(bool verbose = true) : m_verbose(verbose) {}
 
@@ -47,8 +47,16 @@ public:
         }
         if (m_verbose) {
             std::cout << "  [" << (passed ? "PASS" : "FAIL") << "] Password: \""
-                      << password << "\" (length: " << password.length() << ")\n";
+                      << maskPassword(password) << "\" (length: " << password.length() << ")\n";
         }
+    }
+
+    /** @brief Masks sensitive password characters before logging. */
+    static std::string maskPassword(const std::string& password) {
+        if (password.size() <= 2) {
+            return std::string(password.size(), '*');
+        }
+        return password.substr(0, 2) + std::string(password.size() - 2, '*');
     }
 
     /** @brief Returns total number of passed passwords. */
