@@ -20,7 +20,8 @@
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE=Debug -DENEBLE_TESTS=ON -DBUILD_DOC=ON ..
 cmake --build . -j4
-ctest -V	./passwordguard --policy strict Admin2026 weak 12345678A
+ctest -V
+./passwordguard --policy strict Admin2026 weak 12345678A
 ```
 
 ### Security Note on Password Input
